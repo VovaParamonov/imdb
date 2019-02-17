@@ -20,7 +20,7 @@ export default class MovieList extends Component {
 
     componentDidMount() {
         fetch('http://dev.bittenred.com:61537/movies')
-            .then(result => result.json())
+            .then((result) => result.json())// Dont understand why
             .then((res) => {
                     this.setState({
                         isLoaded: false,
@@ -55,23 +55,23 @@ export default class MovieList extends Component {
     };
 
     render() {
-        const isLoaded = this.state.isLoaded;
-        const error = this.state.err;
+        const {isLoaded, err, selectedPage} = this.state;
         const numberPages = parseInt(this.state.numberMovies / 30);
-        const selectedPage = this.state.selectedPage;
         const movies = this.state.movies.map((movie,index) => {
             return (
-                <li key={index}><MovieCard
-                    title={movie.title}
-                    rating={movie.imdbRating}
-                    year={movie.year}
-                    posterurl={movie.posterurl}
-                    description={movie.storyline}
-                /></li>
+                <li key={index}>
+                    <MovieCard
+                        title={movie.title}
+                        rating={movie.imdbRating}
+                        year={movie.year}
+                        posterurl={movie.posterurl}
+                        description={movie.storyline}
+                    />
+                </li>
             )
         });
         let result = null;
-        if (error) {
+        if (err) {
             result = <h1 className={'error'}>Ошибка загрузки</h1>
         } else if(isLoaded) {
             result = <h1 className={'info'}>Данные загружаются...</h1>

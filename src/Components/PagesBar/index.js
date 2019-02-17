@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 
 import './style.css';
 
-
 export default class PagesBar extends Component {
     constructor(props) {
         super(props);
@@ -14,7 +13,9 @@ export default class PagesBar extends Component {
 
     componentWillUpdate(nextProps, nextState, nextContext) {
         if (nextProps.numberPages !== this.state.numberPages) {
-            this.setState({numberPages: nextProps.numberPages});
+            this.setState({
+                numberPages: nextProps.numberPages
+            });
         }
     }
 
@@ -24,12 +25,14 @@ export default class PagesBar extends Component {
             let style = (i === this.props.selectedPage)?
                 {'backgroundColor':'#a8a8a8ff'}:
                 {};
-            numbers.push(<button
-                style={style}
-                key={i}
-                className={'number'}
-                onClick={() => this.props.handle(i)}
-            >{i} </button>);
+
+            numbers.push(
+                <button
+                    style={style}
+                    key={i}
+                    className={'number'}
+                    onClick={() => this.props.handle(i)}
+                >{i}</button>);
         }
 
         return(
