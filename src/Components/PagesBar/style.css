@@ -1,0 +1,39 @@
+.PageBar {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.PageBar button {
+    border: none;
+    background-color: #a8a8a870;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.4s;
+    font-weight: bold;
+    font-size: 20px;
+    outline: none;
+}
+
+.PageBar button:hover {
+    background-color: #a8a8a8ff;
+}
+
+@media (max-width: 400px) {
+    .PageBar {
+        width: 100%;
+        padding: 0 20px;
+        justify-content: space-around;
+    }
+    .PageBar button {
+        font-size: 18px;
+        width: 40px;
+        height: 40px;
+    }
+}

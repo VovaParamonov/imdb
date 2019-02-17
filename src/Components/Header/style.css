@@ -1,0 +1,22 @@
+header {
+    padding: 30px;
+    background-color: #f1f1f1;
+    box-shadow: 0 5px 5px #dedede;
+}
+
+.logo {
+    color: #ff9d00;
+    font-weight: bold;
+    font-size: 50px;
+    font-family: 'Anton', sans-serif;
+}
+
+@media (max-width: 400px) {
+    header {
+        padding: 20px;
+    }
+
+    .logo {
+        font-size: 30px;
+    }
+}
