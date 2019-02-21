@@ -1,0 +1,27 @@
+{
+  "parser": "babel-eslint",
+  "settings": {},
+  "env": {
+    "browser": true
+  },
+  "extends": [
+    "airbnb",
+    "plugin:flowtype/recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],  
+  "rules": {    
+    "react/sort-comp": ["error", {
+      "order": [
+        "type-annotations",
+        "static-methods",
+        "lifecycle",
+        "everything-else",
+        "render"
+      ]
+    }],
+    "react/prefer-stateless-function": ["off"],
+    "react/destructuring-assignment": ["error", "never"],
+    "react/jsx-one-expression-per-line": ["off"]
+  }
+}
