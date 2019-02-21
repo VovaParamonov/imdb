@@ -1,4 +1,4 @@
-.MovieList {
+.infinite-scroll-component {
     display: flex;
     padding: 60px;
     padding-bottom: 120px;
@@ -7,10 +7,17 @@
     position: relative;
 }
 
-.MovieList li {
+.infinite-scroll-component li {
     flex-grow: 1;
     margin-bottom: 50px;
     list-style: none;
+}
+
+.loadInfo {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 @media (max-width: 400px) {
