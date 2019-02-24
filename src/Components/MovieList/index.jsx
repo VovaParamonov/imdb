@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-
 import "./style.css";
+
+import mainRequest from "../../API";
+import Movie from "../../Model/Movie";
 
 import MovieCard from "../MovieCard";
 
@@ -19,48 +21,17 @@ export default class MovieList extends Component {
   }
 
   componentDidMount() {
-    fetch("http://dev.bittenred.com:61537/movies")
-      .then(result => result.json()) // Dont understand why
-      .then(
-        res => {
-          this.setState({
-            isLoaded: false,
-            movies: res.movies,
-            loadedPages: this.state.loadedPages + 1,
-            hasMore: true
-          });
-        },
-        error => {
-          this.setState({
-            err: error,
-            isLoaded: true
-          });
-        }
-      );
+    this.request("http://dev.bittenred.com:61537/movies");
   }
 
   loadPage = () => {
-    fetch(`http://dev.bittenred.com:61537/movies?start=${this.state.loadedPages * 30}`)
-      .then(result => result.json())
-      .then(
-        res => {
-          const hasMore = res.movies.length !== 0;
-          this.setState({
-            isLoaded: false,
-            movies: this.state.movies.concat(res.movies),
-            loadedPages: this.state.loadedPages + 1,
-            hasMore
-          });
-        },
-        error => {
-          this.setState({
-            err: error,
-            isLoaded: true,
-            hasMore: false
-          });
-        }
-      );
+    this.request(
+      `http://dev.bittenred.com:61537/movies?start=${this.state.loadedPages *
+        30}`
+    );
   };
+
+  request = mainRequest;
 
   render() {
     const { isLoaded, err } = this.state;
@@ -83,13 +54,7 @@ export default class MovieList extends Component {
         {this.state.movies.map(movie => {
           return (
             <li key={movie.id}>
-              <MovieCard
-                title={movie.title}
-                rating={movie.imdbRating}
-                year={movie.year}
-                posterurl={movie.posterurl}
-                description={movie.storyline}
-              />
+              <MovieCard movie={new Movie(movie)} />
             </li>
           );
         })}

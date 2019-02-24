@@ -4,8 +4,8 @@ import "./style.css";
 
 export default class MovieCard extends Component {
   render() {
-    const backgroundImage = this.props.posterurl;
-    const { title, rating, year, description } = this.props;
+    const backgroundImage = this.props.movie.posterurl;
+    const { title, rating, year, description } = this.props.movie;
 
     return (
       <div
