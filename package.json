@@ -19,6 +19,18 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "resources/assets/{src,stories,stories-function}/**/*.{js,jsx}": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ]
+  },
   "devDependencies": {
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^4.0.0",
