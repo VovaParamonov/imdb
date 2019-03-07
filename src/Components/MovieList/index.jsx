@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import "./style.css";
 
-import mainRequest from "../../API";
+import request from "../../API";
+
 import Movie from "../../Model/Movie";
 
 import MovieCard from "../MovieCard";
@@ -20,22 +21,54 @@ export default class MovieList extends Component {
     };
   }
 
-  componentDidMount() {
-    this.request("http://dev.bittenred.com:61537/movies");
+  async componentDidMount() {
+    request().then(
+      res => {
+        this.setState(oldState => {
+          return {
+            isLoaded: false,
+            movies: oldState.movies.concat(res.movies),
+            loadedPages: oldState.loadedPages + 1,
+            hasMore: true
+          };
+        });
+      },
+      error => {
+        this.setState({
+          err: error,
+          isLoaded: true,
+          hasMore: false
+        });
+      }
+    );
   }
 
   loadPage = () => {
-    this.request(
-      `http://dev.bittenred.com:61537/movies?start=${this.state.loadedPages *
-        30}`
+    request(this.state.loadedPages * 30).then(
+      res => {
+        this.setState(oldState => {
+          return {
+            isLoaded: false,
+            movies: oldState.movies.concat(res.movies),
+            loadedPages: oldState.loadedPages + 1,
+            hasMore: true
+          };
+        });
+      },
+      error => {
+        this.setState({
+          err: error,
+          isLoaded: true,
+          hasMore: false
+        });
+      }
     );
   };
-
-  request = mainRequest;
 
   render() {
     const { isLoaded, err } = this.state;
     let result = null;
+
     if (err) {
       result = <h1 className="error">Ошибка загрузки</h1>;
     } else if (isLoaded) {

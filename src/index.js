@@ -1,8 +1,10 @@
-import React from 'react';
-import {render} from 'react-dom';
+/* eslint react/jsx-filename-extension: "off" */
 
-import './index.css';
+import React from "react";
+import { render } from "react-dom";
 
-import App from './Components/App';
+import "./index.css";
 
-render(<App />, document.getElementById('root'));
+import App from "./Components/App";
+
+render(<App />, document.getElementById("root"));

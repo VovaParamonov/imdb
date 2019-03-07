@@ -21,7 +21,8 @@
       ]
     }],
     "react/prefer-stateless-function": ["off"],
-    "react/destructuring-assignment": ["error", "never"],
-    "react/jsx-one-expression-per-line": ["off"]
+    "react/destructuring-assignment": ["off", "never"],
+    "react/jsx-one-expression-per-line": ["off"],
+    "react/forbid-prop-types": ["error", { "forbid": ["any"]}]
   }
 }
