@@ -1,17 +1,15 @@
-import React, { Component } from "react";
+import React from "react";
 
 import "./style.css";
 
 import Header from "../Header";
 import MovieList from "../MovieList";
 
-export default class App extends Component {
-  render() {
-    return (
-      <div>
-        <Header />
-        <MovieList />
-      </div>
-    );
-  }
+export default function App() {
+  return (
+    <div>
+      <Header />
+      <MovieList />
+    </div>
+  );
 }

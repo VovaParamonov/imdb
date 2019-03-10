@@ -1,98 +1,58 @@
-import React, { Component } from "react";
+/* eslint no-use-before-define: "off" */
+
+import React, { useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import "./style.css";
 
 import request from "../../API";
 
-import Movie from "../../Model/Movie";
-
 import MovieCard from "../MovieCard";
 
-export default class MovieList extends Component {
-  constructor(props) {
-    super(props);
+export default function MovieList() {
+  const [err, setErr] = useState(null);
+  const [movies, setMovies] = useState([]);
+  const [loadedPages, setLoadedPages] = useState(0);
+  const [hasMore, setHasMore] = useState(false);
 
-    this.state = {
-      err: null,
-      isLoaded: true,
-      movies: [],
-      loadedPages: 0,
-      hasMore: false
-    };
+  useEffect(() => {
+    getMovies();
+  }, []);
+
+  function loadPage() {
+    getMovies(loadedPages * 30);
   }
 
-  async componentDidMount() {
-    request().then(
-      res => {
-        this.setState(oldState => {
-          return {
-            isLoaded: false,
-            movies: oldState.movies.concat(res.movies),
-            loadedPages: oldState.loadedPages + 1,
-            hasMore: true
-          };
-        });
-      },
-      error => {
-        this.setState({
-          err: error,
-          isLoaded: true,
-          hasMore: false
-        });
-      }
-    );
-  }
+  async function getMovies(requestData) {
+    const newMovies = await request(requestData);
 
-  loadPage = () => {
-    request(this.state.loadedPages * 30).then(
-      res => {
-        this.setState(oldState => {
-          return {
-            isLoaded: false,
-            movies: oldState.movies.concat(res.movies),
-            loadedPages: oldState.loadedPages + 1,
-            hasMore: true
-          };
-        });
-      },
-      error => {
-        this.setState({
-          err: error,
-          isLoaded: true,
-          hasMore: false
-        });
-      }
-    );
-  };
-
-  render() {
-    const { isLoaded, err } = this.state;
-    let result = null;
-
-    if (err) {
-      result = <h1 className="error">Ошибка загрузки</h1>;
-    } else if (isLoaded) {
-      result = <h1 className="info">Данные загружаются...</h1>;
+    if (newMovies !== "error") {
+      setMovies(movies.concat(newMovies));
+      setLoadedPages(loadedPages + 1);
+      setHasMore(true);
     } else {
-      result = "";
+      setErr(newMovies);
     }
 
-    return (
-      <InfiniteScroll
-        dataLength={this.state.movies.length}
-        next={this.loadPage}
-        hasMore={this.state.hasMore}
-        loader={<h1 className="loadInfo">Loading...</h1>}
-      >
-        {this.state.movies.map(movie => {
-          return (
-            <li key={movie.id}>
-              <MovieCard movie={new Movie(movie)} />
-            </li>
-          );
-        })}
-        {result}
-      </InfiniteScroll>
-    );
+    if (newMovies.length === 0) {
+      setHasMore(false);
+    }
   }
+
+  return (
+    <InfiniteScroll
+      dataLength={movies.length}
+      next={loadPage}
+      hasMore={hasMore}
+      loader={<h1 className="info">Данные загружаются...</h1>}
+    >
+      {movies.map(movie => {
+        return (
+          <li key={movie.id}>
+            <MovieCard movie={movie} />
+          </li>
+        );
+      })}
+      {err ? <h1 className="error">Ошибка загрузки</h1> : ""}
+    </InfiniteScroll>
+  );
 }

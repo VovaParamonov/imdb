@@ -9,7 +9,10 @@
     "plugin:flowtype/recommended",
     "plugin:react/recommended",
     "plugin:prettier/recommended"
-  ],  
+  ],
+  "plugins": [
+    "react-hooks"
+  ],
   "rules": {    
     "react/sort-comp": ["error", {
       "order": [
@@ -23,6 +26,7 @@
     "react/prefer-stateless-function": ["off"],
     "react/destructuring-assignment": ["off", "never"],
     "react/jsx-one-expression-per-line": ["off"],
-    "react/forbid-prop-types": ["error", { "forbid": ["any"]}]
+    "react/forbid-prop-types": ["error", { "forbid": ["any"]}],
+    "react-hooks/rules-of-hooks": "error"
   }
 }
