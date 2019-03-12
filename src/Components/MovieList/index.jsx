@@ -1,58 +1,52 @@
 /* eslint no-use-before-define: "off" */
 
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import "./style.css";
 
-import request from "../../API";
-
 import MovieCard from "../MovieCard";
 
-export default function MovieList() {
-  const [err, setErr] = useState(null);
-  const [movies, setMovies] = useState([]);
-  const [loadedPages, setLoadedPages] = useState(0);
-  const [hasMore, setHasMore] = useState(false);
-
+export default function MovieList(props) {
   useEffect(() => {
-    getMovies();
+    props.getMovies(
+      props.loadedPages * 30,
+    );
   }, []);
 
   function loadPage() {
-    getMovies(loadedPages * 30);
-  }
-
-  async function getMovies(requestData) {
-    const newMovies = await request(requestData);
-
-    if (newMovies !== "error") {
-      setMovies(movies.concat(newMovies));
-      setLoadedPages(loadedPages + 1);
-      setHasMore(true);
-    } else {
-      setErr(newMovies);
-    }
-
-    if (newMovies.length === 0) {
-      setHasMore(false);
-    }
+    props.getMovies(
+      props.loadedPages * 30,
+    );
   }
 
   return (
     <InfiniteScroll
-      dataLength={movies.length}
+      dataLength={props.movies.length}
       next={loadPage}
-      hasMore={hasMore}
+      hasMore={props.hasMore}
       loader={<h1 className="info">Данные загружаются...</h1>}
     >
-      {movies.map(movie => {
+      {props.movies.map(movie => {
         return (
           <li key={movie.id}>
             <MovieCard movie={movie} />
           </li>
         );
       })}
-      {err ? <h1 className="error">Ошибка загрузки</h1> : ""}
+      {props.err ? <h1 className="error">Ошибка загрузки</h1> : ""}
     </InfiniteScroll>
   );
 }
+
+MovieList.propTypes = {
+  actors: PropTypes.string,
+  sort: PropTypes.string,
+  order: PropTypes.string
+};
+
+MovieList.defaultProps = {
+  actors: "",
+  sort: "",
+  order: ""
+};
