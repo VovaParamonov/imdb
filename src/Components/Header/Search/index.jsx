@@ -12,7 +12,11 @@ export default function Search(props) {
           <i className="fas fa-search" />
         </button>
       </div>
-      <button className="search-elem button-order" onClick={props.orderChange}>
+      <button
+        type="button"
+        className="search-elem button-order"
+        onClick={props.orderChange}
+      >
         <i
           className="fas fa-long-arrow-alt-up"
           style={{ opacity: props.order === "asc" ? 1 : 0.2 }}
@@ -22,7 +26,11 @@ export default function Search(props) {
           style={{ opacity: props.order === "desc" ? 1 : 0.2 }}
         />
       </button>
-      <button className="search-elem button-sort" onClick={props.sortChange}>
+      <button
+        type="button"
+        className="search-elem button-sort"
+        onClick={props.sortChange}
+      >
         <div style={{ opacity: props.sort === "year" ? 1 : 0.2 }}>Year</div>
         <div style={{ opacity: props.sort === "imdbRating" ? 1 : 0.2 }}>
           Rating

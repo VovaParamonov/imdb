@@ -15,21 +15,12 @@ export default function App() {
   const [loadedPages, setLoadedPages] = useState(0);
   const [hasMore, setHasMore] = useState(true);
 
-  function orderChange() {
-    setOrder(order === "asc" ? "desc" : "asc");
-    setMovies([]);
-    setLoadedPages(0);
-    getMovies(0, '', sort, order === "asc" ? "desc" : "asc");
-  }
-
-  function sortChange() {
-    setSort(sort === "imdbRating" ? "year" : "imdbRating");
-    setMovies([]);
-    setLoadedPages(0);
-    getMovies(0, sort === "imdbRating" ? "year" : "imdbRating", order);
-  }
-
-  async function getMovies(startId = 0, actors = "", newSort=sort, newOrder=order) {
+  async function getMovies(
+    startId = 0,
+    actors = "",
+    newSort = sort,
+    newOrder = order
+  ) {
     const newMovies = await request(startId, actors, newSort, newOrder);
 
     if (newMovies !== "error") {
@@ -42,6 +33,32 @@ export default function App() {
     if (newMovies.length === 0) {
       setHasMore(false);
     }
+  }
+  async function resetSearchSettings(actors, newSort, newOrder) {
+    const newMovies = await request(0, actors, newSort, newOrder);
+
+    setOrder(newOrder);
+    setSort(newSort);
+    setLoadedPages(0);
+
+    if (newMovies !== "error") {
+      setMovies(newMovies);
+      setLoadedPages(loadedPages + 1);
+    } else {
+      setErr(newMovies);
+    }
+  }
+
+  function orderChange() {
+    resetSearchSettings("", sort, order === "asc" ? "desc" : "asc");
+  }
+
+  function sortChange() {
+    resetSearchSettings(
+      "",
+      sort === "imdbRating" ? "year" : "imdbRating",
+      order
+    );
   }
 
   return (
