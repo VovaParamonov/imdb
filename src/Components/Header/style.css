@@ -13,9 +13,11 @@ header {
     font-family: 'Anton', sans-serif;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 600px) {
     header {
-        padding: 20px;
+        padding: 10px;
+        flex-direction: column;
+        /*align-items: flex-start;*/
     }
 
     .logo {

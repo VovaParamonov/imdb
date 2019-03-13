@@ -9,11 +9,11 @@ import MovieCard from "../MovieCard";
 
 export default function MovieList(props) {
   useEffect(() => {
-    props.getMovies(props.loadedPages * 30);
+    props.getMovies();
   }, []);
 
   function loadPage() {
-    props.getMovies(props.loadedPages * 30);
+    props.getMovies();
   }
 
   return (
@@ -37,7 +37,6 @@ export default function MovieList(props) {
 
 MovieList.propTypes = {
   movies: PropTypes.array,
-  loadedPages: PropTypes.number,
   getMovies: PropTypes.func,
   err: PropTypes.string,
   hasMore: PropTypes.bool
@@ -45,7 +44,6 @@ MovieList.propTypes = {
 
 MovieList.defaultProps = {
   movies: [],
-  loadedPages: 0,
   getMovies: () => {},
   err: "",
   hasMore: true

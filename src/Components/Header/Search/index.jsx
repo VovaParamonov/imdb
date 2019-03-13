@@ -4,14 +4,21 @@ import PropTypes from "prop-types";
 import "./style.css";
 
 export default function Search(props) {
+  function sendActors(e) {
+    e.preventDefault();
+    props.actorsChange(
+      e.target.getElementsByClassName("input-actors")[0].value
+    );
+  }
+
   return (
     <div className="search-wrapper">
-      <div className="search-elem input-wrapper">
+      <form className="search-elem input-wrapper" onSubmit={sendActors}>
         <input type="text" className="search-elem input-actors" />
         <button type="submit" className="search-elem button-search">
           <i className="fas fa-search" />
         </button>
-      </div>
+      </form>
       <button
         type="button"
         className="search-elem button-order"
@@ -44,12 +51,14 @@ Search.propTypes = {
   orderChange: PropTypes.func,
   sortChange: PropTypes.func,
   order: PropTypes.string,
-  sort: PropTypes.string
+  sort: PropTypes.string,
+  actorsChange: PropTypes.func
 };
 
 Search.defaultProps = {
   orderChange: () => {},
   sortChange: () => {},
   order: "",
-  sort: ""
+  sort: "",
+  actorsChange: () => {}
 };

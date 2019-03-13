@@ -13,6 +13,7 @@ export default function Header(props) {
         sortChange={props.sortChange}
         order={props.order}
         sort={props.sort}
+        actorsChange={props.actorsChange}
       />
     </header>
   );
@@ -22,12 +23,14 @@ Header.propTypes = {
   orderChange: PropTypes.func,
   sortChange: PropTypes.func,
   order: PropTypes.string,
-  sort: PropTypes.string
+  sort: PropTypes.string,
+  actorsChange: PropTypes.func
 };
 
 Header.defaultProps = {
   orderChange: () => {},
   sortChange: () => {},
   order: "",
-  sort: ""
+  sort: "",
+  actorsChange: () => {}
 };

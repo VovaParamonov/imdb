@@ -3,12 +3,13 @@
     padding: 60px;
     padding-bottom: 120px;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: space-around;
+    /*align-items: flex-end;*/
     position: relative;
 }
 
 .infinite-scroll-component li {
-    flex-grow: 1;
+    /*flex-grow: 1;*/
     margin-bottom: 50px;
     list-style: none;
 }
