@@ -82,7 +82,7 @@ button::after {
 }
 
 .genres-wrapper {
-    padding: 5px 50px;
+    padding: 20px 50px;
     display: flex;
     max-height: 250px;
     /*flex-direction: column;*/

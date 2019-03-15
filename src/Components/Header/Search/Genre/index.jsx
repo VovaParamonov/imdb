@@ -38,6 +38,10 @@ Genre.propTypes = {
 Genre.defaultProps = {
   name: "genre",
   checked: false,
-  addSelectedGenre: () => {},
-  removeSelectedGenre: () => {}
+  addSelectedGenre: () => {
+    console.log("Вывана функция по умолчанию");
+  },
+  removeSelectedGenre: () => {
+    console.log("Вывана функция по умолчанию");
+  }
 };

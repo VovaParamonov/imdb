@@ -38,9 +38,9 @@ export default function App() {
         setOrder(newOrder);
         setSort(newSort);
         setActors(newActors.replace(", ", ","));
+        setSelectedGenres(newGenres);
         setMovies(newMovies);
         setLoadedPages(1);
-        setSelectedGenres(newGenres);
       } else {
         setMovies(movies.concat(newMovies));
         setLoadedPages(loadedPages + 1);
@@ -55,15 +55,15 @@ export default function App() {
   }
 
   function genresChange(newGenres) {
-    getMovies(0, undefined, sort, order, newGenres);
+    getMovies(0, undefined, sort, order, newGenres).then();
   }
 
   function actorsChange(newActors) {
-    getMovies(0, newActors);
+    getMovies(0, newActors).then();
   }
 
   function orderChange() {
-    getMovies(0, undefined, sort, order === "asc" ? "desc" : "asc");
+    getMovies(0, undefined, sort, order === "asc" ? "desc" : "asc").then();
   }
 
   function sortChange() {
@@ -72,7 +72,7 @@ export default function App() {
       undefined,
       sort === "imdbRating" ? "year" : "imdbRating",
       order
-    );
+    ).then();
   }
 
   return (

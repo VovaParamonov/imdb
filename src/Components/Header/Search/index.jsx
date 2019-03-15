@@ -109,11 +109,19 @@ Search.propTypes = {
 };
 
 Search.defaultProps = {
-  orderChange: () => {},
-  sortChange: () => {},
+  orderChange: () => {
+    console.log("Вывана функция по умолчанию");
+  },
+  sortChange: () => {
+    console.log("Вывана функция по умолчанию");
+  },
   order: "",
   sort: "",
-  actorsChange: () => {},
-  genresChange: () => {},
+  actorsChange: () => {
+    console.log("Вывана функция по умолчанию");
+  },
+  genresChange: () => {
+    console.log("Вывана функция по умолчанию");
+  },
   selectedGenres: []
 };

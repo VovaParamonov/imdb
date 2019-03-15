@@ -32,11 +32,21 @@ Header.propTypes = {
 };
 
 Header.defaultProps = {
-  orderChange: () => {},
-  sortChange: () => {},
+  orderChange: () => {
+    console.log("Вывана функция по умолчанию");
+  },
+  sortChange: () => {
+    console.log("Вывана функция по умолчанию");
+  },
   order: "",
   sort: "",
-  actorsChange: () => {},
-  genresChange: () => {},
-  selectedGenres: () => {}
+  actorsChange: () => {
+    console.log("Вывана функция по умолчанию");
+  },
+  genresChange: () => {
+    console.log("Вывана функция по умолчанию");
+  },
+  selectedGenres: () => {
+    console.log("Вывана функция по умолчанию");
+  }
 };
