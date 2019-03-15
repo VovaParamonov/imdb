@@ -17,3 +17,7 @@ body {
     text-shadow: 0 0 2px #868686;
     width: 100%;
 }
+
+.hidden {
+    visibility: hidden;
+}

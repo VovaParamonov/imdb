@@ -4,16 +4,19 @@ header {
     box-shadow: 0 5px 5px #dedede;
     display: flex;
     align-items: center;
+    overflow: visible;
 }
 
 .logo {
+    left: 60px;
     color: #ff9d00;
+    z-index: 10;
     font-weight: bold;
     font-size: 50px;
     font-family: 'Anton', sans-serif;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 690px) {
     header {
         padding: 10px;
         flex-direction: column;

@@ -15,22 +15,32 @@ export default function App() {
   const [loadedPages, setLoadedPages] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [actors, setActors] = useState("");
+  const [selectedGenres, setSelectedGenres] = useState([]);
 
   async function getMovies(
     startId = loadedPages * 30,
     newActors = actors,
     newSort = sort,
-    newOrder = order
+    newOrder = order,
+    newGenres = selectedGenres
   ) {
-    const newMovies = await request(startId, newActors, newSort, newOrder);
+    const newMovies = await request(
+      startId,
+      newActors.replace(", ", ","),
+      newSort,
+      newOrder,
+      newGenres.join(",")
+    );
 
     if (newMovies !== "error") {
       if (startId === 0) {
+        // add or set new settings for request
         setOrder(newOrder);
         setSort(newSort);
-        setActors(newActors);
+        setActors(newActors.replace(", ", ","));
         setMovies(newMovies);
         setLoadedPages(1);
+        setSelectedGenres(newGenres);
       } else {
         setMovies(movies.concat(newMovies));
         setLoadedPages(loadedPages + 1);
@@ -44,16 +54,25 @@ export default function App() {
     }
   }
 
+  function genresChange(newGenres) {
+    getMovies(0, undefined, sort, order, newGenres);
+  }
+
   function actorsChange(newActors) {
     getMovies(0, newActors);
   }
 
   function orderChange() {
-    getMovies(0, "", sort, order === "asc" ? "desc" : "asc");
+    getMovies(0, undefined, sort, order === "asc" ? "desc" : "asc");
   }
 
   function sortChange() {
-    getMovies(0, "", sort === "imdbRating" ? "year" : "imdbRating", order);
+    getMovies(
+      0,
+      undefined,
+      sort === "imdbRating" ? "year" : "imdbRating",
+      order
+    );
   }
 
   return (
@@ -64,6 +83,8 @@ export default function App() {
         order={order}
         sort={sort}
         actorsChange={actorsChange}
+        selectedGenres={selectedGenres}
+        genresChange={genresChange}
       />
       <MovieList
         movies={movies}
@@ -71,6 +92,9 @@ export default function App() {
         err={err}
         hasMore={hasMore}
       />
+      <a href="#top" className="upButton">
+        <i className="fas fa-chevron-circle-up" />
+      </a>
     </div>
   );
 }

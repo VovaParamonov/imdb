@@ -1,9 +1,25 @@
-import React from "react";
+/* eslint react/no-array-index-key: "off" */
+
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import Genre from "./Genre";
+
+import { getGenres } from "../../../API";
 
 import "./style.css";
 
 export default function Search(props) {
+  const [genres, setGenres] = useState([]);
+
+  async function loadGenres() {
+    const loadedGenres = await getGenres();
+    setGenres(loadedGenres);
+  }
+
+  useEffect(() => {
+    loadGenres().then();
+  }, []);
+
   function sendActors(e) {
     e.preventDefault();
     props.actorsChange(
@@ -11,10 +27,28 @@ export default function Search(props) {
     );
   }
 
+  function addSelectedGenre(genreName) {
+    props.genresChange(props.selectedGenres.concat([genreName]));
+  }
+  function removeSelectedGenre(genreName) {
+    props.genresChange(
+      props.selectedGenres.filter(genre => genre !== genreName)
+    );
+  }
+
+  function genresToggle() {
+    const el = document.getElementsByClassName("genres-wrapper")[0];
+    el.classList.toggle("hidden");
+  }
+
   return (
     <div className="search-wrapper">
       <form className="search-elem input-wrapper" onSubmit={sendActors}>
-        <input type="text" className="search-elem input-actors" />
+        <input
+          type="text"
+          className="search-elem input-actors"
+          placeholder="Actors..."
+        />
         <button type="submit" className="search-elem button-search">
           <i className="fas fa-search" />
         </button>
@@ -43,6 +77,23 @@ export default function Search(props) {
           Rating
         </div>
       </button>
+      <button
+        type="button"
+        onClick={genresToggle}
+        className="search-elem button-genres"
+      >
+        Genres
+      </button>
+      <div className="genres-wrapper hidden">
+        {genres.map((genre, i) => (
+          <Genre
+            addSelectedGenre={addSelectedGenre}
+            removeSelectedGenre={removeSelectedGenre}
+            key={i}
+            name={genre}
+          />
+        ))}
+      </div>
     </div>
   );
 }
@@ -52,7 +103,9 @@ Search.propTypes = {
   sortChange: PropTypes.func,
   order: PropTypes.string,
   sort: PropTypes.string,
-  actorsChange: PropTypes.func
+  actorsChange: PropTypes.func,
+  genresChange: PropTypes.func,
+  selectedGenres: PropTypes.array
 };
 
 Search.defaultProps = {
@@ -60,5 +113,7 @@ Search.defaultProps = {
   sortChange: () => {},
   order: "",
   sort: "",
-  actorsChange: () => {}
+  actorsChange: () => {},
+  genresChange: () => {},
+  selectedGenres: []
 };

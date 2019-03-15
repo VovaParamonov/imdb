@@ -1,0 +1,12 @@
+.genre-wrapper {
+    margin-bottom: 8px;
+    width: 170px;
+}
+
+.genre-wrapper span {
+    padding-left: 5px;
+}
+
+label {
+    cursor: pointer;
+}
