@@ -13,25 +13,23 @@ export default function request(
   const url = `${BASE_URL}?start=${startId}&actors=${actors}&sort=${sort}&order=${order}&genres=${genres}`;
   return fetch(url)
     .then(result => result.json()) // Dont understand why
-    .then(
-      res => {
-        return res.movies.map(movie => new Movie(movie));
-      },
-      () => {
-        return "error";
-      }
-    );
+    .then(res => {
+      return res.movies.map(movie => new Movie(movie));
+    })
+    .catch(() => {
+      console.log("Ошибка загрузки списка фильмов");
+      return [];
+    });
 }
 
 export function getGenres() {
   return fetch(GENRES_URL)
     .then(result => result.json())
-    .then(
-      res => {
-        return res.genres;
-      },
-      () => {
-        return "error";
-      }
-    );
+    .then(res => {
+      return res.genres;
+    })
+    .catch(() => {
+      console.log("Ошибка загрузки списка жанров");
+      return [];
+    });
 }

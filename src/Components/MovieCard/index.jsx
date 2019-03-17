@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import "./style.css";
 
+import defaultImage from "../../img/noposter.jpg";
+
 export default function MovieCard(props) {
-  const backgroundImage = props.movie.posterurl;
+  const [backgroundImage, setBackgroundImage] = useState(props.movie.posterurl);
   const { title, rating, year, description } = props.movie;
 
   return (
-    <div
-      className="MovieCard"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
-    >
+    <div className="MovieCard">
+      <img
+        className="movie-poster"
+        src={backgroundImage}
+        alt=""
+        onError={() => setBackgroundImage(defaultImage)}
+      />
       <span className="movieRating">{rating}</span>
       <div className="cardFooter">
         <span className="movieTitle">{title}</span>
@@ -21,6 +26,7 @@ export default function MovieCard(props) {
     </div>
   );
 }
+
 MovieCard.propTypes = {
   movie: PropTypes.object
 };

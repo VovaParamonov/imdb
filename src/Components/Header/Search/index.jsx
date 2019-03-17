@@ -30,6 +30,7 @@ export default function Search(props) {
   function addSelectedGenre(genreName) {
     props.genresChange(props.selectedGenres.concat([genreName]));
   }
+
   function removeSelectedGenre(genreName) {
     props.genresChange(
       props.selectedGenres.filter(genre => genre !== genreName)
