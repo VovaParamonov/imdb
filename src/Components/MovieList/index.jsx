@@ -12,6 +12,7 @@ export default function MovieList(props) {
   const [movies, setMovies] = useState([]);
   const [loadedPages, setLoadedPages] = useState(0);
   const [hasMore, setHasMore] = useState(true);
+  const [err, setErr] = useState(false);
 
   async function getMovies(
     startId = loadedPages * 30,
@@ -26,10 +27,12 @@ export default function MovieList(props) {
       newSort,
       newOrder,
       newGenres.join(",")
-    );
+    ).catch(() => {
+      setErr(true);
+      return [];
+    });
 
     if (startId === 0) {
-      // add or set new settings for request
       setMovies(newMovies);
       setLoadedPages(1);
     } else {
@@ -70,7 +73,7 @@ export default function MovieList(props) {
           </li>
         );
       })}
-      {/* {props.err ? <h1 className="error">Ошибка загрузки</h1> : ""} */}
+      {err ? <h1 className="error">Ошибка загрузки</h1> : ""}
     </InfiniteScroll>
   );
 }

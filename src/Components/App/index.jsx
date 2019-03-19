@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 
 import "./style.css";
 
 import Header from "../Header";
 import MovieList from "../MovieList";
 
+import useSetSearchSettings from "../../hooks";
+
 export default function App() {
-  const [order, setOrder] = useState("asc");
-  const [sort, setSort] = useState("imdbRating");
-  // const [err, setErr] = useState(null);
-  const [actors, setActors] = useState("");
-  const [selectedGenres, setSelectedGenres] = useState([]);
+  const [
+    order,
+    setOrder,
+    sort,
+    setSort,
+    actors,
+    setActors,
+    selectedGenres,
+    setSelectedGenres
+  ] = useSetSearchSettings();
 
   function genresChange(newGenres) {
     setSelectedGenres(newGenres);

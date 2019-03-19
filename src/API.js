@@ -16,9 +16,9 @@ export default function request(
     .then(res => {
       return res.movies.map(movie => new Movie(movie));
     })
-    .catch(() => {
+    .catch(e => {
       console.log("Ошибка загрузки списка фильмов");
-      return [];
+      throw e;
     });
 }
 
