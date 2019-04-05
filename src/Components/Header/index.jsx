@@ -9,44 +9,19 @@ export default function Header(props) {
     <header name="top">
       <h1 className="logo">IMDb</h1>
       <Search
-        orderChange={props.orderChange}
-        sortChange={props.sortChange}
-        order={props.order}
-        sort={props.sort}
-        actorsChange={props.actorsChange}
-        genresChange={props.genresChange}
-        selectedGenres={props.selectedGenres}
+        setSearchSettings={props.setSearchSettings}
+        searchSettings={props.searchSettings}
       />
     </header>
   );
 }
 
 Header.propTypes = {
-  orderChange: PropTypes.func,
-  sortChange: PropTypes.func,
-  order: PropTypes.string,
-  sort: PropTypes.string,
-  actorsChange: PropTypes.func,
-  genresChange: PropTypes.func,
-  selectedGenres: PropTypes.array
+  setSearchSettings: PropTypes.object,
+  searchSettings: PropTypes.object
 };
 
 Header.defaultProps = {
-  orderChange: () => {
-    console.log("Вывана функция по умолчанию");
-  },
-  sortChange: () => {
-    console.log("Вывана функция по умолчанию");
-  },
-  order: "",
-  sort: "",
-  actorsChange: () => {
-    console.log("Вывана функция по умолчанию");
-  },
-  genresChange: () => {
-    console.log("Вывана функция по умолчанию");
-  },
-  selectedGenres: () => {
-    console.log("Вывана функция по умолчанию");
-  }
+  setSearchSettings: {},
+  searchSettings: {}
 };

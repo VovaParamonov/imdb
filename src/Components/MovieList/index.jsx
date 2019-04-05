@@ -1,68 +1,24 @@
 /* eslint no-use-before-define: "off" */
+/* eslint prefer-destructuring: "off" */
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useMovies } from "../../hooks";
+
 import "./style.css";
 
 import MovieCard from "../MovieCard";
-import request from "../../API";
 
 export default function MovieList(props) {
-  const [movies, setMovies] = useState([]);
-  const [loadedPages, setLoadedPages] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
-  const [err, setErr] = useState(false);
+  const searchSettings = props.searchSettings;
 
-  async function getMovies(
-    startId = loadedPages * 30,
-    newActors = props.actors,
-    newSort = props.sort,
-    newOrder = props.order,
-    newGenres = props.selectedGenres
-  ) {
-    const newMovies = await request(
-      startId,
-      newActors.replace(", ", ","),
-      newSort,
-      newOrder,
-      newGenres.join(",")
-    ).catch(() => {
-      setErr(true);
-      return [];
-    });
-
-    if (startId === 0) {
-      setMovies(newMovies);
-      setLoadedPages(1);
-    } else {
-      setMovies(movies.concat(newMovies));
-      setLoadedPages(loadedPages + 1);
-    }
-
-    if (newMovies.length === 0) {
-      setHasMore(false);
-    }
-  }
-
-  useEffect(() => {
-    getMovies(
-      0,
-      props.actors,
-      props.sort,
-      props.order,
-      props.selectedGenres
-    ).then();
-  }, [props.order, props.sort, props.actors, props.selectedGenres]);
-
-  function loadPage() {
-    getMovies().then();
-  }
+  const [movies, getMovies, hasMore, err] = useMovies(searchSettings);
 
   return (
     <InfiniteScroll
       dataLength={movies.length}
-      next={loadPage}
+      next={getMovies}
       hasMore={hasMore}
       loader={<h1 className="info">Данные загружаются...</h1>}
     >
@@ -79,15 +35,9 @@ export default function MovieList(props) {
 }
 
 MovieList.propTypes = {
-  order: PropTypes.string,
-  sort: PropTypes.string,
-  actors: PropTypes.string,
-  selectedGenres: PropTypes.array
+  searchSettings: PropTypes.object
 };
 
 MovieList.defaultProps = {
-  order: "",
-  sort: "",
-  actors: "",
-  selectedGenres: []
+  searchSettings: {}
 };
